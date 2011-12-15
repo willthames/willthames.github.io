@@ -40,11 +40,11 @@ I started as a member of 24x7 production operations support team, where typical 
 Well-respected application server specialist in Fujitsu Consulting’s Application Services division, delivering prestigious projects employing key technologies, often for the first time. My two main projects were at Reed and BBC Worldwide, implementing and supporting Oracle 9iAS on HP and ATG Dynamo on Sun hardware respectively.
 
 ## Education
-### 1997-2000    Academic Research, University of Manchester
+### 1997-2000 Academic Research, University of Manchester
 Researched behaviour of sound in enclosed environments.
-### 1996-1997    MSc Numerical Analysis, University of Manchester
+### 1996-1997 MSc Numerical Analysis, University of Manchester
 Researched numerical controlled machine tool simulation, in collaboration with LightWork Design Ltd.
-### 1993-1996    BSc (Hons) 1st class Computer Science and Mathematics, University of Manchester
+### 1993-1996 BSc (Hons) 1st class Computer Science and Mathematics, University of Manchester
 
 Received Macmillan and Barclays prizes for respectively best second and third year Computer Science and Mathematics student.
 A Levels: Mathematics: A; French: B; Chemistry: B; Further Mathematics: C

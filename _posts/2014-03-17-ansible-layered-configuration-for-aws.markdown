@@ -215,3 +215,5 @@ TASK: [get EC2 facts] *********************************************************
 ok: [ec2-54-206-88-224.ap-southeast-2.compute.amazonaws.com] => {"ansible_facts": {"ansible_ec2_ami-id": "ami-5ba83761", "ansible_ec2_ami-launch-index": "0", "ansible_ec2_ami-manifest-path": "(unknown)", "ansible_ec2_ami_id": "ami-5ba83761", "ansible_ec2_ami_launch_index": "0", "ansible_ec2_ami_manifest_path": "(unknown)", "ansible_ec2_block-device-mapping-ami": "/dev/sda1", "ansible_ec2_block-device-mapping-root": "/dev/sda1", "ansible_ec2_block_device_mapping_ami": "/dev/sda1",  ...
 {% endraw %}
 {% endhighlight %}
+
+The source code for the inventory and playbooks is also [on Github](https://github.com/willthames/ansible-ec2-example)

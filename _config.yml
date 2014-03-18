@@ -1,3 +1,4 @@
 name: Will Thames' tech blog
 markdown: redcarpet
 pygments: true
+encoding: utf-8

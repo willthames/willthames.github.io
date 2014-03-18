@@ -35,10 +35,11 @@ groups.
 This is relatively straightforward, and the [ec2 module documentation](http://docs.ansible.com/ec2_module.html#examples)
 shows how to do it, but for completeness we'll describe it here. 
 
-#### Note
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
 This assumes you have set up your AWS connection ready for use
-with [boto](http://boto.readthedocs.org/en/latest/boto_config_tut.html)
+with <a href="http://boto.readthedocs.org/en/latest/boto_config_tut.html">boto</a>
 either in the boto configuration file or environment variables.
+</div>
 
 A minimal playbook looks like:
 {% highlight yaml %}
@@ -63,14 +64,17 @@ With this in mind then, and bringing this around to AWS, we'll take the example 
 an organisation that uses a single AWS region, separate VPCs for preproduction and 
 production. 
 
-#### Note
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
 Note that while I use dummy image, subnet and security group ids in this documentation,
 I haven't obscured the results of the commands run or the contents within the source
 repository - except for ssh key.
+</div>
 
-#### Note
-Also, you'll need to have a copy of YOURKEYNAME.pem - you can use ec2_keypair to generate it
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
+Also, you'll need to have a copy of YOURKEYNAME.pem - you can use 
+<a href="http://docs.ansible.com/ec2_key_module.html">ec2_key</a> to generate it
 or create it in the EC2 console.
+</div>
 
 ### inventory/group_vars/all.yml
 all is a special group that all hosts in inventory, other than localhost, belong to. 
@@ -81,7 +85,7 @@ image: ami-a1b2c3d4
 sshkey: YOURKEYNAME
 {% endhighlight %}
 
-### inventory/group_vars/production.yml 
+### inventory/group_vars/production.yml 
 {% highlight yaml %}
 security_group: sg-aaaa1111
 {% endhighlight %}

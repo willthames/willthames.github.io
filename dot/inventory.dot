@@ -1,0 +1,26 @@
+digraph inventory { 
+  all -> production;
+  all -> preprod;
+  all -> web;
+  all -> other_app;
+  production -> production_az_a;
+  production -> production_az_b;
+  production -> production_web;
+  web -> production_web
+  web -> preprod_web
+  preprod -> preprod_web;
+  production_az_a -> production_web_a;
+  production_web_a -> prod_web_server_78a;
+  production_web -> production_web_a;
+  production [shape=record; label="{production|security-group}"]
+  production_web [shape=record; label="{production-web|instance-type}"]
+  preprod_web [shape=record; label="preprod-web"]
+  production_web_a [shape=record; label="production-web-a"]
+  production_az_a [shape=record; label="{production-az-a|zone|subnet}"]
+  production_az_b [shape=record; label="production-az-b"]
+  web [shape=record; label="web"]
+  all [shape=record; label="{all|image|sshkey|region}"]
+  other_app [shape=record; label="other-app"]
+  preprod [shape=record; label="preprod"]
+
+}

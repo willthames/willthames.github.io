@@ -31,6 +31,11 @@ Graph (as a group will likely have multiple children - groups or hosts) and can 
 multiple parents - so the production-web group could belong to both production and web
 groups.
 
+An example inventory graph for the instance we'll build below is
+<div class="clearfix">
+<img src="/images/inventory.png" class="img-thumbnail">
+</div>
+
 ## Creating an instance in AWS EC2
 This is relatively straightforward, and the [ec2 module documentation](http://docs.ansible.com/ec2_module.html#examples)
 shows how to do it, but for completeness we'll describe it here. 

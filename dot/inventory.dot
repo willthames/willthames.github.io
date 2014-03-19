@@ -12,15 +12,15 @@ digraph inventory {
   production_az_a -> production_web_a;
   production_web_a -> prod_web_server_78a;
   production_web -> production_web_a;
-  production [shape=record; label=<{<font face="Times-New-Roman" point-size="16">production</font>|security-group}>]
-  production_web [shape=record; label="{production-web|instance-type}"]
-  preprod_web [shape=record; label="preprod-web"]
-  production_web_a [shape=record; label="production-web-a"]
-  production_az_a [shape=record; label="{production-az-a|zone|subnet}"]
-  production_az_b [shape=record; label="production-az-b"]
-  web [shape=record; label="web"]
-  all [shape=record; label="{all|image|sshkey|region}"]
-  other_app [shape=record; label="other-app"]
-  preprod [shape=record; label="preprod"]
-
+  production [shape=record; label=<{<font face="Times New Roman, Bold" point-size="16">production</font>|security-group}>]
+  production_web [shape=record; label=<{<font face="Times New Roman, Bold" point-size="16">production-web</font>|instance-type}>]
+  preprod_web [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">preprod-web</font>>]
+  production_web_a [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">production-web-a</font>>]
+  production_az_a [shape=record; label=<{<font face="Times New Roman, Bold" point-size="16">production-az-a</font>|zone|subnet}>]
+  production_az_b [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">production-az-b</font>>]
+  web [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">web</font>>]
+  all [shape=record; label=<{<font face="Times New Roman, Bold" point-size="16">all</font>|image|sshkey|region}>]
+  other_app [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">other-app</font>>]
+  preprod [shape=record; label=<<font face="Times New Roman, Bold" point-size="16">preprod</font>>]
+  prod_web_server_78a [label="prod-web-server-78a"]
 }

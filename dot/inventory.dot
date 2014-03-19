@@ -12,7 +12,7 @@ digraph inventory {
   production_az_a -> production_web_a;
   production_web_a -> prod_web_server_78a;
   production_web -> production_web_a;
-  production [shape=record; label="{production|security-group}"]
+  production [shape=record; label=<{<font face="Times-New-Roman" point-size="16">production</font>|security-group}>]
   production_web [shape=record; label="{production-web|instance-type}"]
   preprod_web [shape=record; label="preprod-web"]
   production_web_a [shape=record; label="production-web-a"]

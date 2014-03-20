@@ -1,0 +1,12 @@
+span.glyphicon-large { 
+  font-size: 32px;
+  vertical-align: middle;
+}
+
+.page-footer { 
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: #eeeeee;
+}

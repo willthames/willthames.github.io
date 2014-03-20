@@ -12,30 +12,25 @@
 
         <!-- Custom CSS -->
         <link rel="stylesheet" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/site.css">
 
     </head>
     <body>
 
         <div class="container">
-          <div class="header">
+          <div class="page-header">
             <h1 class="title"><a href="/">{{ site.name }}</a></h1>
-            <a class="extra" href="/">home</a>
           </div>
 
           {{ content }}
 
-          <div class="footer">
+          <div class="page-footer">
             <div class="contact">
-              <p>
-                Will Thames<br />
-                will@thames.id.au
-              </p>
-            </div>
-            <div class="contact">
-              <p>
-              <a href="https://github.com/willthames"><img src="/images/GitHub-Mark-32px.png"> github.com/willthames</a><br />
-              <a href="https://twitter.com/willthames"><img src="/images/bird_black_32_0.png"> twitter.com/willthames</a><br />
-              </p>
+              <ul class="list-inline">
+                <li><span class="glyphicon glyphicon-envelope glyphicon-large"></span> <a href="mailto:will@thames.id.au">will@thames.id.au</a></li>
+                <li><a href="https://github.com/willthames"><img src="/images/GitHub-Mark-32px.png"> github.com/willthames</a></li>
+                <li><a href="https://twitter.com/willthames"><img src="/images/bird_black_32_0.png"> twitter.com/willthames</a></li>
+              </ul>
             </div>
           </div>
         </div>

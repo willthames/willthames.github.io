@@ -1,0 +1,12 @@
+digraph dummy { 
+  a -> b -> c -> d -> e -> f -> g -> h -> i;
+  a [fontname="Times New Roman, Bold"]
+  b [fontname="Times New Roman Bold"]
+  c [fontname="Times, Bold"]
+  d [fontname="Times Bold"]
+  e [fontname="Times-Roman, Bold"]
+  f [fontname="Times-Roman Bold"]
+  g [fontname="Times-Roman-Bold"]
+  h [fontname="Times-Bold"]
+  i [fontname="Times-New-Roman-Bold"]
+}

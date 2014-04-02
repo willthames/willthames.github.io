@@ -29,7 +29,7 @@ DB name and username are likely to be consistent, and password, DB servers,
 and possibly port will vary. It's very likely that DB type will be so 
 consistent that we might hardcode it in the template rather than having
 unnecessary templating (there can be a temptation to template everything
-but the principle of YAGNI applies)
+but the principle of <dfn title="YAGNI"><abbr title="You Ain't Gonna Need It">YAGNI</abbr></dfn> applies)
 
 Between DBs in the same environment, there is little in common, but if more 
 than one application uses the same DB then they might share configuration

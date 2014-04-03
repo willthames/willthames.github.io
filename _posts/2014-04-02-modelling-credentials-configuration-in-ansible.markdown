@@ -255,3 +255,26 @@ prod-web-server-1a         : ok=3    changed=2    unreachable=0    failed=0
 {% endhighlight %}
 And voilà, config properties files with the much more secure 
 password of 'Ch4ng3M3!'.
+
+<h2>Addendum</h2>
+03 April 2014
+
+I realised my credentials modelling takes no account of environment. One simple way to do this is to store the environment name 
+in the environment config file (i.e. add "env: production" to production.yml) and then have a hierarchy of vars files e.g.
+../../secrets/production/dbsupersecret.yml
+
+The nice thing about how Ansible Vault works is that you can choose to just encrypt the files under the production directory
+and have cleartext versions for dev and UAT, and the same templates and playbooks will still work (you only need to then
+pass --ask-vault-pass when running against production)
+
+I've updated the github repo to reflect this, but the main change is to the location of the credentials files and the playbook:
+{% highlight text %}
+{% raw %}
+- hosts: web
+  connection: local
+  vars_files:
+  - '../../secrets/{{env}}/dbsupersecrets.yml'
+
+  ...
+{% endraw %}
+{% endhighlight %}

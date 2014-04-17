@@ -10,7 +10,7 @@ module Jekyll
     def glyphicon(level)
       results = { 
         'info' => 'info-sign',
-        'warn' => 'warning-sign',
+        'warning' => 'warning-sign',
         'danger' => 'exclamation-sign',
         'success' => 'ok-sign'
       }  

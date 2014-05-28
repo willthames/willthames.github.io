@@ -75,7 +75,9 @@ success and failure scenarios:
     ignore_errors: True
 {% endhighlight %}
 
-After running that playbook, the known facts are these:
+After running the resulting playbook (that playbook and output are
+[available as a gist](https://gist.github.com/willthames/ee40bd6d9b5eebb9b8eb)),
+the known facts are these:
 
 * Running `pkill -IO -f pattern_to_search_for || true` on the host itself 
 outside of ansible exits with status 0

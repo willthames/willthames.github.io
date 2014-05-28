@@ -51,8 +51,8 @@ PLAY RECAP ********************************************************************
            localhost                  : ok=3    changed=1    unreachable=0    failed=1  
 {% endhighlight %}
 
-So running `pkill -IO -f pattern_to_search_for || true` returns -29 
-(where `SIGIO` is signal 29 on my machine). 
+So running `pkill -IO -f pattern_to_search_for || true` returns `-29`
+(where `SIGIO` is signal `29` on my machine). 
 
 Adding the following to the above playbook allows us to see different
 success and failure scenarios:
@@ -126,8 +126,10 @@ So I can then run `python  /home/will/.ansible/tmp/ansible-tmp-1401256918.15-507
 {"changed": true, "end": "2014-05-28 16:03:49.657242", "stdout": "", "cmd": "pkill -IO -f Ki5ViZNY4EIRaf2JDqvQ || true ", "start": "2014-05-28 16:03:49.646183", "delta": "0:00:00.011059", "stderr": "", "rc": -29, "warnings": []}
 {% endhighlight %}
 
-At this point it's probably worth a brief exposition of how the shell module works in Ansible. 
-Really it just kicks off the `command` module with a `USE_SHELL=1` module. So I'm going to be
+At this point it's probably worth a brief exposition of how the shell 
+module works in Ansible. 
+Really it just kicks off the `command` module with a `USE_SHELL=1` 
+module. So I'm going to be
 looking at the [command module source](https://github.com/ansible/ansible/blob/bb3426327c2d612b0740e9c644ea45535a3f3a0f/library/commands/command)
 from the latest commit at time of writing.
 
@@ -170,7 +172,8 @@ where 157 is 128 + 29.
 <footer><code>man bash</code></footer>
 </blockquote>
 
-This explains why pgrep does not fail, and why pkill without -f does not fail. 
+This explains why `pgrep` does not fail, and why `pkill` without `-f` 
+does not fail. 
 It's not really an Ansible bug (one could argue that maybe process
 management is a missing module), but it was instructive to use Ansible 
 debugging techniques to get to the cause. 

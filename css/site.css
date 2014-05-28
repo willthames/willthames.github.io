@@ -10,3 +10,9 @@ span.glyphicon-large {
   border-top-style: solid;
   border-top-color: #eeeeee;
 }
+
+blockquote { 
+  background-color: lightblue;
+  font-size: larger;
+  font-style: italic;
+}

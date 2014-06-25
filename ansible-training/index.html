@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Ansible Training</title>
+
+    <meta name="description" content="Ansible Training">
+    <meta name="author" content="Will Thames">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section>
+          <h1>Ansible Training</h1>
+          <p>Will Thames &mdash; will@thames.id.au</p>
+        </section>
+
+        <section>
+          <h1>Overview</h1>
+          <ul>
+            <li>What is Ansible?</li>
+            <li>Fundamentals of Ansible</li>
+            <li>Best practices</li>
+            <li>Managing AWS</li>
+            <li>Further reading</li>
+          </ul>
+
+          <aside class="notes">
+          <ul>
+            <li>Components of Ansible: Inventory, Templates, Playbooks, Roles</li>
+            <li>Modelling inventory</li>
+            <li>Structure of a playbook</li>
+            <li>Common code: Organisation of the shared ansible-playbooks repository</li>
+          </ul>
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h2>What is Ansible</h2>
+            <p><a href="http://ansible.com/">Ansible</a> allows you to manage 
+            the configuration of remote linux server instances &mdash; whether
+            config files, installed software.</p>
+            <p>Additionally Ansible can create hosts in EC2 (and other clouds
+            or VPS providers such as digitalocean), in Vagrant, through cobbler, etc.</p>
+            <p>Ansible is <a href="http://github.com/ansible/ansible">open source</a></p>
+          </section>
+          <section>
+            <h2>Why Ansible?</h2>
+            <ul>
+              <li>No special privileges required &mdash; does not run as root</li>
+              <li>Runs tasks under ssh &mdash; no new daemon required</li>
+              <li>Runs under python &mdash; so runs on most standard linux installs</li>
+              <li>Usable orchestration platform &mdash; it can coordinate the application of configuration management</li>
+              <li>Improvements to Ansible are accepted upstream</li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- Fundamentals of Ansible: Inventory, Templates, Playbooks, Roles -->
+        <section>
+          <section>
+            <h2>Fundamentals of Ansible</h2>
+            <p>Key concepts of Ansible include:
+            <ul>
+              <li>Playbooks</li>
+              <li>Inventory</li>
+              <li>Templates</li>
+              <li>Roles</li>
+            </ul>
+            You'll also want to know how to Get Started</p>
+          </section>
+          <section>
+            <h2>Playbooks</h2>
+            <p>Playbooks specify a list of tasks* that are run in sequence
+            across one or more hosts. Each task can also run multiple times 
+            with a variable taking a different value</p>
+            <pre><code data-trim contenteditable>
+- hosts: localhost
+  connection: local
+  tasks:
+  &mdash; name: create ex1, ex2 directories in current directory
+    action: file state=directory dest={{item}}
+    with_items: [ex1, ex2]
+</code></pre>
+          </section>
+
+          <section>
+            <h2>Inventory</h2>
+            <p>Inventory is the representation of information about hosts &mdash; 
+            what groups a host belongs to, the properties those groups and hosts
+            have. A hierarchy of groups often results</p>
+            <img src="images/prod-web-78a.png"/>
+          </section>
+
+          <section>
+            <h2>Inventory</h2>
+            <p>You can configure your inventory using the -i flag or set it in 
+            your Ansible config file, and it can point to a static file (typically
+            called hosts) or a dynamic inventory script (e.g. ec2.py).</p>
+
+            <p>Ansible will pick up group_vars and host_vars directories that live in 
+            the same location as the inventory file, and look for group and host variables
+            there. So if the hosts file lives in <code>~/inventory/hosts</code>, 
+            then the information
+            about the exampleapp group would live in ~/inventory/group_vars/exampleapp.yml</p>
+            <aside class="notes">
+              <p>Further reading: <a href="http://willthames.github.io/2014/03/17/ansible-layered-configuration-for-aws.html">Ansible Layered Configuration for AWS</a></p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Templates</h2>
+            <p>Templates allow you to generate configuration files from values set in
+            various inventory properties. This means that you can store one template in
+            source control that applies to many different environments. An example might
+            be a file specifying database connection information that would have the same
+            structure but different values for dev, test and prod environments</p>
+            <aside class="notes">
+              <p>Further reading: <a href="http://willthames.github.io/2014/04/02/modelling-credentials-configuration-in-ansible.html">Modelling credentials configuration in Ansible</a></p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Roles</h2>
+            <p>Roles are a way to encapsulate common tasks and properties for reuse.
+            One example is to install java, a very common task!</p>
+            <pre><code data-trim contenteditable>
+- { role: ../../../common/roles/java7/0.3.0, minor_version: 45, dest: /opt/java }
+</pre></code>
+            <p>If you find yourself writing the same tasks in multiple playbooks, turn 
+            them into roles.</p>
+          </section>
+
+          <section>
+            <h2>Getting started with Ansible</h2>
+            <p>You will need:</p>
+            <ul>
+              <li>A host on which to run Ansible</li>
+              <li>A sensible ssh setup to talk to target hosts</li>
+              <li>Ansible playbooks</li>
+              <li>A config file</li>
+              <li>Some inventory</li>
+              <li>Your own playbooks</li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- Best practices -->
+        <section>
+          <section>
+            <h2>Code reuse: sharing common code</h2>
+            <ul>
+              <li>Use the central ansible-playbooks and contribute back where you can</li>
+              <li>Check out <a href="http://galaxy.ansible.com/">Ansible Galaxy</a> for 
+              existing implementations of roles</li>
+              <li>Use common roles, and create new common roles.</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Versioning</h2>
+            <ul>
+              <li>Use versioning for common roles so that older playbooks can keep linking 
+              to older roles.</li>
+              <li>You should ensure that when you use git or hg in your playbooks, you 
+              refer to a specific commit so that later runs of the same playbook do not 
+              have a different effect</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Avoid command/shell</h2>
+            <p>Ansible modules are designed to be safely repeatable</p>
+            <p>Use the file module rather than command with rm, mkdir, rmdir etc.</p>
+            <p>Other modules that replace shell commands include  synchronize, unarchive, git, hg, svn</p>
+            <p>You'll need to merge in patch <a href="https://github.com/ansible/ansible/pull/5123">#5123</a> for this to work in your environment</p>
+          </section>
+<section>
+            <h2>Checks, commits</h2>
+            <p>As with any software development, make the most of the tools of your 
+            environment. Agree coding standards with your teams, and enforce them 
+            with pre- or post-commit scripts.</p>
+
+            <p>You can use e.g. ansible-playbook \-\-syntax-check
+            to ensure that the playbook is syntactically valid, for example</p>
+
+            <p>Further reading: <a href="https://github.com/ansible/ansible/blob/devel/docsite/rst/test_strategies.rst">Ansible Testing Strategies</a></p>
+          </section>
+        </section>
+
+        <!-- Managing AWS -->
+        <section>
+          <section> 
+            <h2>Managing AWS</h2>
+            <p>This is not specifically Ansible related &mdash; there
+            are some things you just have to do to manage AWS. But this
+            is how the two go together</p>
+          <section>
+          AWS Single Sign On API which will give you an AWS Security Token and keys,
+          which you can use with Ansible modules</p>
+          </section>
+          <section>
+            <h2>Step 2: the basics</h2>
+          </section>
+          <section>
+            <h2>What else?</h2>
+            There are Ansible modules for managing:
+            <ul>
+              <li>ELBs</li>
+              <li>EBS volumes and snapshots</li>
+              <li>Autoscaling groups, policies etc</li>
+              <li>RDS</li>
+              <li>&hellip;</li>
+            </ul>
+            <p>Further reading: <a href="http://docs.ansible.com/list_of_cloud_modules.html">Ansible's cloud modules</a></p>
+          </section>
+        </section>
+
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'moon', // available themes are in /css/theme
+        transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

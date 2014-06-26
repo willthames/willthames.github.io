@@ -14,11 +14,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <link rel="stylesheet" href="css/reveal.min.css">
-    <link rel="stylesheet" href="css/theme/default.css" id="theme">
-
-    <!-- For syntax highlighting -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/beige.css" id="theme">
 
     <!-- If the query includes 'print-pdf', include the PDF print sheet -->
     <script>
@@ -93,15 +90,16 @@
         <section>
           <section>
             <h2>Fundamentals of Ansible</h2>
-            <p>Key concepts of Ansible include:
+            <p>Key concepts of Ansible include:</p>
             <ul>
               <li>Playbooks</li>
               <li>Inventory</li>
               <li>Templates</li>
               <li>Roles</li>
             </ul>
-            You'll also want to know how to Get Started</p>
+            <footer>You'll also want to know how to Get Started</footer>
           </section>
+
           <section>
             <h2>Playbooks</h2>
             <p>Playbooks specify a list of tasks* that are run in sequence
@@ -115,6 +113,7 @@
     action: file state=directory dest={{item}}
     with_items: [ex1, ex2]
 </code></pre>
+            <p>* Also: roles, handlers, variables. But mostly tasks!</p>
           </section>
 
           <section>
@@ -122,35 +121,44 @@
             <p>Inventory is the representation of information about hosts &mdash; 
             what groups a host belongs to, the properties those groups and hosts
             have. A hierarchy of groups often results</p>
-            <img src="images/prod-web-78a.png"/>
           </section>
 
           <section>
             <h2>Inventory</h2>
-            <p>You can configure your inventory using the -i flag or set it in 
-            your Ansible config file, and it can point to a static file (typically
-            called hosts) or a dynamic inventory script (e.g. ec2.py).</p>
+            <img src="images/prod-web-78a.png"/>
+            <footer>Ansible inventory grapher &mdash; <a href="http://github.com/willthames/ansible-inventory-grapher">http://github.com/willthames/ansible-inventory-grapher</a></footer>
+          </section>
 
-            <p>Ansible will pick up group_vars and host_vars directories that live in 
-            the same location as the inventory file, and look for group and host variables
-            there. So if the hosts file lives in <code>~/inventory/hosts</code>, 
-            then the information
-            about the exampleapp group would live in ~/inventory/group_vars/exampleapp.yml</p>
-            <aside class="notes">
-              <p>Further reading: <a href="http://willthames.github.io/2014/03/17/ansible-layered-configuration-for-aws.html">Ansible Layered Configuration for AWS</a></p>
-            </aside>
+          <section>
+            <h2>Inventory</h2>
+            <ul>
+              <li>You can configure your inventory using the <code>-i</code> flag or set it in 
+              your Ansible config file, and it can point to a static file (typically
+              called hosts) or a dynamic inventory script (e.g. ec2.py).</li>
+
+              <li>Ansible will pick up group_vars and host_vars directories that live in 
+                the same location as the inventory file, and look for group and host variables
+                there.</li> 
+              <li>So if the hosts file lives in <code>~/inventory/hosts</code>, 
+              then the information
+              about the exampleapp group would live in 
+              <code>~/inventory/group_vars/exampleapp.yml</code></li>
+            </ul>
+            <footer>Further reading: <a href="http://willthames.github.io/2014/03/17/ansible-layered-configuration-for-aws.html">Ansible Layered Configuration for AWS</a></footer>
           </section>
 
           <section>
             <h2>Templates</h2>
             <p>Templates allow you to generate configuration files from values set in
             various inventory properties. This means that you can store one template in
-            source control that applies to many different environments. An example might
+            source control that applies to many different environments.</p>
+            <p>An example might
             be a file specifying database connection information that would have the same
             structure but different values for dev, test and prod environments</p>
-            <aside class="notes">
-              <p>Further reading: <a href="http://willthames.github.io/2014/04/02/modelling-credentials-configuration-in-ansible.html">Modelling credentials configuration in Ansible</a></p>
-            </aside>
+            <pre><code data-trim contenteditable>
+db.settings={{dbhost}}:{{dbport}}/{{dbuser}}:{{dbpass}}@{{dbschema}}
+</code></pre>
+            <footer>Further reading: <a href="http://willthames.github.io/2014/04/02/modelling-credentials-configuration-in-ansible.html">Modelling credentials configuration in Ansible</a></footer>
           </section>
 
           <section>
@@ -158,7 +166,9 @@
             <p>Roles are a way to encapsulate common tasks and properties for reuse.
             One example is to install java, a very common task!</p>
             <pre><code data-trim contenteditable>
-- { role: ../../../common/roles/java7/0.3.0, minor_version: 45, dest: /opt/java }
+- role: ../../../common/roles/java7/0.3.0
+  minor_version: 45
+  dest: /opt/java
 </pre></code>
             <p>If you find yourself writing the same tasks in multiple playbooks, turn 
             them into roles.</p>
@@ -170,20 +180,19 @@
             <ul>
               <li>A host on which to run Ansible</li>
               <li>A sensible ssh setup to talk to target hosts</li>
-              <li>Ansible playbooks</li>
+              <li>Some playbooks</li>
               <li>A config file</li>
               <li>Some inventory</li>
-              <li>Your own playbooks</li>
             </ul>
           </section>
         </section>
 
         <!-- Best practices -->
         <section>
+          <section><h1>Best Practices</h1></section>
           <section>
             <h2>Code reuse: sharing common code</h2>
             <ul>
-              <li>Use the central ansible-playbooks and contribute back where you can</li>
               <li>Check out <a href="http://galaxy.ansible.com/">Ansible Galaxy</a> for 
               existing implementations of roles</li>
               <li>Use common roles, and create new common roles.</li>
@@ -212,27 +221,40 @@
             environment. Agree coding standards with your teams, and enforce them 
             with pre- or post-commit scripts.</p>
 
-            <p>You can use e.g. ansible-playbook \-\-syntax-check
+            <p>You can use e.g. <code>ansible-playbook --syntax-check</code>
             to ensure that the playbook is syntactically valid, for example</p>
 
-            <p>Further reading: <a href="https://github.com/ansible/ansible/blob/devel/docsite/rst/test_strategies.rst">Ansible Testing Strategies</a></p>
+            <footer>Further reading: <a href="https://github.com/ansible/ansible/blob/devel/docsite/rst/test_strategies.rst">Ansible Testing Strategies</a></footer>
           </section>
         </section>
 
         <!-- Managing AWS -->
         <section>
           <section> 
-            <h2>Managing AWS</h2>
+            <h1>Managing AWS</h1>
             <p>This is not specifically Ansible related &mdash; there
             are some things you just have to do to manage AWS. But this
             is how the two go together</p>
-          <section>
-          AWS Single Sign On API which will give you an AWS Security Token and keys,
-          which you can use with Ansible modules</p>
           </section>
+
           <section>
-            <h2>Step 2: the basics</h2>
+            <h2>The basics</h2>
+            <p>Ansible relies on <a href="http://boto.readthedocs.org/en/latest/">boto</a>. 
+            With a suitable <a href="http://boto.readthedocs.org/en/latest/boto_config_tut.html">~/.boto</a> 
+            config file, the playbook that creates an instance looks a bit like:</p>
+<pre><code>
+  - name: create instance
+    ec2:
+      user_data: "{{ lookup('template', '../templates/userdata.tmpl') }}"
+      region: "{{region}}"
+      image: "{{rhel6ami}}"
+      instance_type: "{{instance_type}}"
+      vpc_subnet_id: "{{vpc_subnet}}"
+      group_id: "{{security_group}}"
+    register: ec2
+</pre></code>
           </section>
+
           <section>
             <h2>What else?</h2>
             There are Ansible modules for managing:
@@ -243,7 +265,7 @@
               <li>RDS</li>
               <li>&hellip;</li>
             </ul>
-            <p>Further reading: <a href="http://docs.ansible.com/list_of_cloud_modules.html">Ansible's cloud modules</a></p>
+            <footer>Further reading: <a href="http://docs.ansible.com/list_of_cloud_modules.html">Ansible's cloud modules</a></footer>
           </section>
         </section>
 
@@ -265,7 +287,7 @@
         history: true,
         center: true,
 
-        theme: 'moon', // available themes are in /css/theme
+        theme: 'beige', // available themes are in /css/theme
         transition: 'linear', // default/cube/page/concave/zoom/linear/fade/none
 
         // Parallax scrolling

@@ -158,7 +158,7 @@ simplicity's sake.
       vpc_subnet_id: "{{ subnet }}"
       group: "{{ security_group }}"
       instance_tags: 
-        name: "{{inventory_hostname}}"
+        Name: "{{inventory_hostname}}"
 {% endraw %}
 {% endhighlight %}
 
@@ -203,7 +203,7 @@ EC2_INI_PATH=./ec2.ini ansible-playbook -i ~/src/ansible/plugins/inventory/ec2.p
 with the playbook
 {% highlight yaml %}
 {% raw %}
-- hosts: tag_name_{{instance}}
+- hosts: tag_Name_{{instance}}
 
   tasks:
   - name: get EC2 facts
@@ -213,7 +213,7 @@ with the playbook
 
 {% highlight text %}
 {% raw %}
-PLAY [tag_name_prod-web-server-78a] ******************************************* 
+PLAY [tag_Name_prod-web-server-78a] ******************************************* 
 
 GATHERING FACTS *************************************************************** 
 <ec2-54-206-88-224.ap-southeast-2.compute.amazonaws.com> REMOTE_MODULE setup

@@ -36,7 +36,7 @@ of rules.
 In the roles subdirectory (either inside a playbook directory or in the `roles_path` directory)
 roles are stored in `rolename/roleversion` directories
 
-```
+{% highlight yaml %}
 ansible-playbooks/application
  - templates
  - vars
@@ -52,20 +52,22 @@ ansible-playbooks/application
              - 0.0.2
          - anotherrole
              - 1.2.3
-```
+{% endhighlight %}
 
 ### Playbooks do not vary
 This one at first glance seems extreme, but all of the logic can be removed from a playbook
 and moved into roles
 
-```
+{% highlight yaml %}
+{% raw %}
 - hosts: application-{{env}}
   vars_files: 
   - ../inventory/group_vars/application-{{env}}.yml
-  
+
   roles:
   - application/{{application_role_version}}
-```
+{% endraw %}
+{% endhighlight %}
 
 Unfortunately we have to include the environment inventory vars file (containing
 `application_role_version` explicitly. This is because `application_role_version` 
@@ -78,11 +80,11 @@ There's no need to include multiple roles in the playbook when the main role can
 include all the dependent roles. So for an application that relies on installing java
 and tomcat, `meta/main.yml` might look like:
 
-```
+{% highlight yaml %}
 dependencies:
 - { role: java7/1.0.0, minor_version: 65 }
 - { role: tomcat/2.3.1, tomcat_version: "7.0.55" }
-```
+{% endhighlight %}
 
 To make the main benefit of this, it's worth setting `role_path` in your Ansible configuration
 file to the path to common roles. 
@@ -95,12 +97,12 @@ where no changes are allowed except to change the status to `DEPRECATED` as they
 superseded. Status names could be improved (for example `BETA` or `DEVEL` rather than `DRAFT`, 
 `SUPERSEDED` rather than `DEPRECATED` and perhaps `FINAL` isn't so final if it can be superseded.)
 
-```
+{% highlight yaml %}
 # Status: DRAFT
 ---
 dependencies:
 - { role: amazing/0.0.1 }
-```
+{% endhighlight %}
 
 Checks can then be made to warn when a playbook is using draft or deprecated roles, and version
 control hooks could be used to enforce the lifecycle constraints. 

@@ -32,6 +32,10 @@ later redeployments of older playbooks. When the playbook is being updated for i
 it still may not necessarily wish to bring in the changes of the updated role, and commit ids
 and tags have no (obvious) solution for this scenario. 
 
+From here on in, I describe the approach that is starting to solve the problem with the
+constraints we have. I don't claim it to be perfect, and I'm sure plenty of people have 
+different thoughts.
+
 On this basis, we are just using directory naming for role versioning, combined with a number
 of rules.
 
@@ -77,6 +81,9 @@ Unfortunately we have to include the environment inventory vars file (containing
 `application_role_version` explicitly. This is because `application_role_version` 
 cannot come implicitly from inventory (what roles get included 
 gets calculated before inventory is read). Also, you'll need to pass in `-e env=test`.
+
+Once the playbook is in such a minimal state, with all the logic and variables moved completely
+out of the playbook, we can hope that it needs no further changes. 
 
 ### One role per playbook
 

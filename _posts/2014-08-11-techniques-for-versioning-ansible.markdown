@@ -1,5 +1,5 @@
 ---
-title: Patterns for Versioning Ansible
+title: Techniques for Versioning Ansible
 date: 2014-08-11 20:56:00
 layout: post
 ---

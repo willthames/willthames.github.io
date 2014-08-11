@@ -6,15 +6,19 @@ layout: post
 First, let's start with the why. With source control and inventory, do we actually need 
 to version Ansible playbooks or roles? 
 
-The problem we wish to solve is when changing a playbook or role to update it for later
-releases (and not just new version numbers but perhaps other alterations - indeed
-updating an application version should be possible without any changes to playbooks or roles) - 
-how do we ensure that redeployments to production (for example when autoscaling) don't pick up 
-those changes. 
+In an environment with multiple development teams with their own requirements, we want
+to ensure that different teams don't trample on each others toes. 
+
+Repeatability is key - running the same playbook months apart against the same environment
+should have exactly the same result. 
+
+The problem we wish to solve is when updating a playbook or role, 
+how do we ensure that later redeployments, in particular to production,
+(for example when autoscaling) don't pick up those changes. 
 
 Using a suitable version control workflow (such as separate branches for develop and mainline)
 would be one technique of ensuring that the correct version of a playbook was run against the
-appropriate environment but you still need a way of tying branch to environment. 
+appropriate environment &mdash; but you still need a way of tying branch to environment. 
 
 Alternatively, as long as you store the commit id for each playbook per environment,
 you can redeploy at will. Storing a commit id in 

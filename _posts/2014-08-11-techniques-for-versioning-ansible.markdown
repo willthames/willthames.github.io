@@ -16,6 +16,10 @@ The problem we wish to solve is when updating a playbook or role,
 how do we ensure that later redeployments, in particular to production,
 (for example when autoscaling) don't pick up those changes. 
 
+<div class="alert alert-warning"><span class="glyphicon glyphicon-warning"></span> The information from here on in, while a possible solution, has been
+superseded by <a href="/2014/09/03/techniques-for-versioning-ansible-ii.html">later events</a>
+</div>
+
 Using a suitable version control workflow (such as separate branches for develop and mainline)
 would be one technique of ensuring that the correct version of a playbook was run against the
 appropriate environment &mdash; but you still need a way of tying branch to environment. 

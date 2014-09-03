@@ -8,8 +8,9 @@ This is a replacement post for my most recent entry on
 The motivations described within that post remain valid.
 We do versioning for the following reasons:
 
-* to allow playbooks to have the same effect, even when run months later
-* so that roles may be updated without worrying about breaking earlier
+* Allow the reuse of a role across multiple playbooks
+* Ensure playbooks to have the same effect, even when run months later
+* Roles may be updated without worrying about breaking earlier
   playbooks that rely on them
 
 Even while writing the post I thought that source control versioning 

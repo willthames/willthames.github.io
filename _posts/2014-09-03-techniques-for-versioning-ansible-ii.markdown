@@ -89,3 +89,18 @@ In our organisation we put in a couple of principles for versioning of roles:
 You could use [git submodules](http://git-scm.com/book/en/Git-Tools-Submodules)
 (or presumably a mercurial equivalent) rather than installing the roles 
 alongside the playbook but we're keeping it simple for now.
+
+## Versioning playbooks
+
+Again, tags and changesets are useful to identify a version of a playbook
+to use when deploying to an environment (of course you still need some
+way of knowing exactly what version of a playbook *should* be used with
+which environment). 
+
+One way of doing this is to store the version of the playbook with 
+the environment. So for a `helloworld` application, `helloworld.yml` might
+contain `playbook: helloworld/playbooks/setup.yml`, 
+and `helloworld-prod.yml` might contain `playbook_version: v1.2.3`.
+
+This information could then be used to generate a deployment playbook or
+feed into e.g. AWS user-data that then kicks off an ansible-pull script.

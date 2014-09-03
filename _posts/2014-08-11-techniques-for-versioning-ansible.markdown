@@ -16,7 +16,7 @@ The problem we wish to solve is when updating a playbook or role,
 how do we ensure that later redeployments, in particular to production,
 (for example when autoscaling) don't pick up those changes. 
 
-<div class="alert alert-warning"><span class="glyphicon glyphicon-warning"></span> The information from here on in, while a possible solution, has been
+<div class="alert alert-warning"><span class="glyphicon glyphicon-warning-sign"></span> The information from here on in, while a possible solution, has been
 superseded by <a href="/2014/09/03/techniques-for-versioning-ansible-ii.html">later events</a>
 </div>
 

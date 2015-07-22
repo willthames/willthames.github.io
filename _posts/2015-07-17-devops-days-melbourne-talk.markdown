@@ -1,6 +1,6 @@
 ---
 title: Devops Days Melbourne Talk
-date: 2017-07-17 08:05:00
+date: 2015-07-17 08:05:00
 layout: post
 ---
 At [Devops Days Melbourne](http://devopsdays.org/events/2015-melbourne/) I gave
@@ -9,7 +9,7 @@ This year's is called "What Operations can learn from Developers" and talks abou
 how Ops can make use of the same practices and techniques that developers use
 to maintain great code.
 
-* [Slides](/devopsdays2015/)
+* [Slides](/devopsdays2015/) \[[pdf](/What Ops can learn from Dev.pdf)\]
 * Video - to be added
 
 ### Technical aside

@@ -1,0 +1,3 @@
+[submodule "whatisdevops"]
+	path = whatisdevops
+	url = https://github.com/willthames/whatisdevops

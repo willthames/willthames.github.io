@@ -2,7 +2,6 @@ name: Will Thames' tech blog
 title: Will Thames' tech blog
 description: Lessons from working and playing with things like AWS, Ansible, and others
 url: http://willthames.github.io
-markdown: redcarpet
 highlighter: pygments
 encoding: utf-8
 port: 4002

@@ -17,7 +17,7 @@ strace -r -o /tmp/strace.out ansible -m debug -a 'msg=hello' testhost
 ```
 
 was enough to gather some information. Comparing my colleague's results with
-my own, I found a lot of 100ms calls to read:
+my own, I found a lot of 100ms calls to `read`:
 
 ```
 0.132407 read(7, "/usr/lib/python2.7/site-packages"..., 4096) = 284

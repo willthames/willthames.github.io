@@ -37,10 +37,9 @@ gi.require_version('GnomeKeyring', '1.0') before import to ensure that the right
 version gets loaded.\n  from gi.repository import GnomeKeyring\n", 4096) = 284
 ```
 
-As my colleague doesn't actually use gnome-keyring, a `yum erase gnome-keyring`
+As my colleague doesn't actually use gnome keyring, a `yum erase python-keyring`
 sufficed.
 
 There is a [bug](https://bugzilla.redhat.com/show_bug.cgi?id=1259747)
-against python-keyring in Fedora 23 (which might be why I haven't seen it, I
-haven't upgraded from Fedora 22 yet) which also has a workaround in the second
-comment if you do need to use gnome-keyring.
+against python-keyring in Fedora 23 which also has a workaround in the second
+comment if you do need to use it.

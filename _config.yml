@@ -8,3 +8,4 @@ port: 4002
 email: will@thames.id.au
 github_username: willthames
 twitter_username: willthames
+timezone: Australia/Brisbane

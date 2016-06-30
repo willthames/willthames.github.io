@@ -16,3 +16,7 @@ blockquote {
   font-size: larger;
   font-style: italic;
 }
+
+code {
+  font-size: 100% !important;
+}

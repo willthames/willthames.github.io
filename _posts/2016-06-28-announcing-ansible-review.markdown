@@ -10,7 +10,7 @@ and I've given it little publicity other than an
 [DevOps Brisbane Meetup](http://www.meetup.com/Devops-Brisbane/).
 
 `ansible-review` is a code review tool for Ansible. A lot of the work that was
-done in the `ansible-lint` 3.0 release was done to accommodate `ansible-review`,
+done in the `ansible-lint` 3.0 release was to accommodate `ansible-review`,
 including some new rules, and some tidy ups that allow better reuse of the
 `ansible-lint` code.
 

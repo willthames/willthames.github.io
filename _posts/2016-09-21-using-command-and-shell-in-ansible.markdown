@@ -50,7 +50,7 @@ target                     : ok=1    changed=1    unreachable=0    failed=0
 ```
 
 Because of the great potential for false positives (e.g. you
-need to run a command that has a module in a way that the module
+need to run a command with an equivalent module in a way that the module
 does not support), it's easy to switch off warnings in a way
 that works with both `ansible` and `ansible-lint` - just add
 `warn: no` to the command arguments

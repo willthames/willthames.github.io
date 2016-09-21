@@ -8,7 +8,7 @@ I realise I have quite strong opinions on the `command` and
 [ansible-lint](https://github.com/willthames/ansible-lint) for ways to
 use the modules badly. Let me count the ways...
 
-## Using command/shell instead of a better module
+### Using command/shell instead of a better module
 
 There are a number of modules that can be used instead of commands.
 Obvious candidates include most package installation modules
@@ -69,7 +69,7 @@ YAML form in my playbooks now - and I have an `ansible-review`
 check for that! For simplicity I use the key-value form in inline
 examples here.)
 
-## Using shell instead of command
+### Using shell instead of command
 
 The `shell` module is potentially more dangerous than the `command`
 module (ok, nothing is really stopping you doing `command: rm -rf --no-preserve-root`)
@@ -81,7 +81,7 @@ Similarly, expanding shell variables or file globs require the
 the `shell` module. If you are using these features, think twice
 if you can rewrite the `shell` command to make it more Ansibley.
 
-## Convergence and command/shell
+### Convergence and command/shell
 
 When you run `command` or `shell`, they always set `changed` to `True`.
 This is because Ansible has no mechanism for understanding whether
@@ -93,7 +93,7 @@ twice, no changes should happen on the second run. There are
 (at least) four ways to achieve this (`ansible-lint` only checks
 these four, so if there's another mechanism, let me know).
 
-### changed_when
+#### 1. changed_when
 
 If a command is read only, set `changed_when` to `False`. If you
 can tell whether a command changed something based on its return
@@ -106,7 +106,7 @@ code or its stdout or stderr, you can use this with `changed_when`:
   changed_when: '"\n0 metadata files removed" not in yum_clear.stdout'
 ```
 
-### creates and removes
+#### 2. and 3. creates and removes
 
 If a command creates a file after it is first run, or removes a file
 after it is first run, you can use the `creates` or `removes` argument
@@ -121,7 +121,7 @@ with `command` or `shell`. Then it won't run a second time.
 
 (don't use the above example, use `copy: content=hello dest=/tmp/hello`)
 
-### when
+#### 4. when
 
 Often a command behaves from the outside world no differently if it
 puts something into a state or it's already in that state. In such

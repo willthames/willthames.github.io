@@ -23,6 +23,32 @@ I also managed
 to introduce a [`command_warnings` check](http://docs.ansible.com/ansible/intro_configuration.html#command-warnings)
 into Ansible that will warn you at runtime.
 
+With the following playbook:
+
+```
+- hosts: target
+  gather_facts: no
+
+  tasks:
+  - name: get coreutils version
+    command: rpm -q coreutils
+```
+
+`ansible-playbook` outputs a warning when `command_warnings` is enabled:
+
+```
+$ ansible-playbook playbook.yml
+
+PLAY [target] ******************************************************************
+
+TASK [get coreutils version] ***************************************************
+changed: [target]
+ [WARNING]: Consider using yum, dnf or zypper module rather than running rpm
+
+PLAY RECAP *********************************************************************
+target                     : ok=1    changed=1    unreachable=0    failed=0
+```
+
 Because of the great potential for false positives (e.g. you
 need to run a command that has a module in a way that the module
 does not support), it's easy to switch off warnings in a way
@@ -30,15 +56,15 @@ that works with both `ansible` and `ansible-lint` - just add
 `warn: no` to the command arguments
 
 ```
-- name: get git status
-  command: git status
+- name: get coreutils version
+  command: rpm -q coreutils
   args:
     warn: no
-  register: git_status
+  register: coreutils_version
 ```
 
 (Using non-YAML notation, the middle three lines would just be
-`command: warn=no git status`, but I've moved over to full
+`command: warn=no rpm -q coreutils`, but I've moved over to full
 YAML form in my playbooks now - and I have an `ansible-review`
 check for that! For simplicity I use the key-value form in inline
 examples here.)

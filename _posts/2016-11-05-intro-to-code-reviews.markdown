@@ -17,10 +17,8 @@ their peers on their contributions before merge, as well as learn
 from the feedback on other colleagues' contributions. But code review
 is not just for the benefit of junior team members &ndash; it promotes
 a shared understanding of the entire codebase amongst the team,
-which should help eliminate wasteful code being added to the codebase.
-Often obvious errors can be avoided before they get into the
-codebase at all (non-obvious errors will hopefully get found at a
-pre-production testing phase)
+making it easier for everyone to contribute, avoid errors, and reduce
+wasteful or overly complicated code being added to the codebase.
 
 ## When should code reviews happen
 
@@ -53,7 +51,7 @@ Refer to the documentation for your version control platform,
 and perhaps your internal documentation for your change
 workflow, for how to submit reviews.
 
-## What should people look for in a code review
+## Reviewing the code
 
 First of all, you have to understand the change you're reviewing.
 If you don't understand the change, you can't positively review
@@ -80,8 +78,6 @@ seem like tedious nitpicking. If the code has to meet such automated
 checks before it even gets to review, then the human element
 can be saved for the deep structural thought.
 
-## Reviewing the code
-
 Comment on specific lines of code if you can to say where the
 code doesn't meet standards or could be improved. General feedback
 on the change as a whole can typically be provided as a comment
@@ -106,14 +102,15 @@ and others may have to merge the result.
 
 ## How should someone best prepare for the code review
 
-For a contributor, ensure that your [commit messages explain
-what you are trying to achieve and why](http://chris.beams.io/posts/git-commit/).
-Adhere to the standards
-of your code base. Realise that code reviews shouldn't be a battle,
-and try not to take criticism of your code personally. Assume best
-intentions from the reviewer. However, if criticism
-is personal, then you should say so. A lot of conflict in code
-reviews comes from misunderstandings &ndash; try and see if you
-can clear up such misunderstandings &ndash; either in the review, in the
-commit messages or just through personal interaction (face to face,
-by phone or through online means)
+For a contributor:
+
+- ensure that your [commit messages explain
+  what you are trying to achieve and why](http://chris.beams.io/posts/git-commit/).
+- adhere to the standards of your code base.
+- assume best intentions from the reviewer.
+- realise that code reviews shouldn't be a battle,
+  and try not to take criticism of your code personally.
+  However, if criticism is personal, then you should say so.
+- try and reduce conflict resulting from misunderstandings &ndash;
+  see if you can clear up such misunderstandings, either in the review, in the
+  commit messages or just through talking it through with the reviewer.

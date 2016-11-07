@@ -5,13 +5,14 @@ layout: post
 draft: true
 ---
 Most software development teams have long been doing code reviews, and
-it's definitely not uncommon amongst systems administrators, but neither
-is it universally practised.
+while it's not uncommon amongst systems administrators, 
+it's not universally practised.
 
 ## Why do code reviews
 
-Code reviews are a means of ensuring a team-level quality of code &ndash;
-hopefully all code gets brought to a much higher standard as a result.
+Constructive code reviews are a means of ensuring the quality
+of code is consistent across the team &ndash;
+and typically all code gets brought to a much higher standard as a result.
 Through code reviews, junior team members can see obtain feedback from
 their peers on their contributions before merge, as well as learn
 from the feedback on other colleagues' contributions. But code review
@@ -32,7 +33,7 @@ retrospectively.
 
 Ideally, code would undergo some kind of continuous integration
 testing prior to review. The sophistication of such testing
-can be basic syntax checking up to full-scale test deployments.
+can range from basic syntax checking up to full-scale test deployments.
 If it passes this automated checking, then it's worth spending
 human effort on a review.
 
@@ -53,7 +54,7 @@ Refer to the documentation for your version control platform,
 and perhaps your internal documentation for your change
 workflow, for how to submit reviews.
 
-## Reviewing the code
+## For the Reviewer: Reviewing the code
 
 First of all, you have to understand the change you're reviewing.
 If you don't understand the change, you can't positively review
@@ -66,8 +67,10 @@ When you understand the change, there are a few key levels of
 code review:
 
 - syntax &ndash; is the code well formatted, meeting indentation and
-  whitespace standards. Is it idiomatic for the language
-- semantics &ndash; are common error-prone patterns avoided
+  whitespace standards and free from parse errors.
+- style &ndash; is the code idiomatic for the language, are common
+  error-prone patterns for that language avoided, is the code
+  easily understood
 - functional &ndash; does the code do what it's supposed to do
 - architecture &ndash; is the code required, are there any improvements
   to be made through abstractions, reuse of other code. Does the
@@ -75,12 +78,12 @@ code review:
 
 The first two of these are excellent candidates for automated checks &ndash;
 particularly as from a reviewer's point of view, they're really
-tedious to review, and from a reviewee's point of view, they just
-seem like tedious nitpicking. If the code has to meet such automated
+tedious to review, and from a reviewee's point of view, they can feel
+like nitpicking. If the code has to meet such automated
 checks before it even gets to review, then the human element
 can be saved for the deep structural thought.
 [`ansible-review`](/2016/06/28/announcing-ansible-review.html) is
-an example of such a tool for Ansible, most languages and CM
+an example of such a tool for Ansible; most languages and CM
 frameworks have alternatives.
 
 Comment on specific lines of code if you can to say where the
@@ -88,24 +91,26 @@ code doesn't meet standards or could be improved. General feedback
 on the change as a whole can typically be provided as a comment
 without referencing a specific line.
 
-Code reviews should be objective where possible. There are always
-subjective preferences in any code base, but such preferences should
-be well documented &ndash; by pointing to such documentation in the code
-review, the feeling of subjectivity can be avoided. As you come
-across undocumented preferences, document them.
-
 Assume best intentions, and try and address the code rather than
 the person writing the code. Criticism should never be personal.
+
+Code reviews should be objective where possible. There are always
+subjective preferences in any code base, but such preferences should
+be decided at a team level beforehand, and then be well documented &ndash;
+by pointing to such documentation in the code
+review, the feeling of subjectivity can be avoided. As you come
+across undocumented preferences, determine that they are what
+the team wish to use, and document them.
 
 If you are satisfied that there are no blocking issues with the
 change, signify your approval in the appropriate way.
 
-I prefer to let the code submitter accept the change if possible,
+I prefer to let the code contributor accept the change if possible,
 in case there are any last minute issues that they notice. In some
 tools or under some permission schemes, this may not be allowed,
 and others may have to merge the result.
 
-## How should someone best prepare for the code review
+## For the Reviewee: Prepare for code reviews
 
 For a contributor:
 
@@ -113,9 +118,9 @@ For a contributor:
   what you are trying to achieve and why](http://chris.beams.io/posts/git-commit/).
 - adhere to the standards of your code base.
 - assume best intentions from the reviewer.
-- realise that code reviews shouldn't be a battle,
+- realise that a code review is not a battle,
   and try not to take criticism of your code personally.
   However, if criticism is personal, then you should say so.
 - try and reduce conflict resulting from misunderstandings &ndash;
   see if you can clear up such misunderstandings, either in the review, in the
-  commit messages or just through talking it through with the reviewer.
+  commit messages or through talking it through with the reviewer.

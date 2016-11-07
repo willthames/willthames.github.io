@@ -124,3 +124,29 @@ For a contributor:
 - try and reduce conflict resulting from misunderstandings &ndash;
   see if you can clear up such misunderstandings, either in the review, in the
   commit messages or through talking it through with the reviewer.
+
+## Getting started
+
+If you don't currently do code reviews, and you're not using pull
+requests for contributing code, and you don't have documented
+standards, all of the above might seem a little daunting.
+
+Not having standards is a bit of a chicken and egg situation &ndash;
+without reviewing code, often preferences exist but aren't
+expressed anywhere (some of our preferences have been implicit
+for years until a new contributor comes along and does something
+off the wall, and we realise it needs to be explicit).
+
+One way to start might be to just ask a colleague to give you
+feedback on your recent commits. This might help to start
+discovering preferences, and then these can be documented.
+From there, you'll likely find that code review tools provide
+a much easier way to provide feedback, because you can associate
+your comments with a line of code very easily.
+
+We actually use a code review process for improving our standards
+and best practices - all new standards must be accepted by at least
+two colleagues, and all best practice suggestions must get at least
+one +1. This ensures that no one feels that standards are dictated.
+This will be required more in a big distributed team than in a small
+co-located team where a 2 minute chat would suffice!

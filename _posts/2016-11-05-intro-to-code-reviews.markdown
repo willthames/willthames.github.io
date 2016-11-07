@@ -1,18 +1,18 @@
 ---
 title: An Introduction to Code Reviews
-date: 2016-11-05 07:30:00
+date: 2016-11-07 11:30:00
 layout: post
 draft: true
 ---
 Most software development teams have long been doing code reviews, and
-while it's not uncommon amongst systems administrators, 
+while it's not uncommon amongst system administrators, 
 it's not universally practised.
 
 ## Why do code reviews
 
 Constructive code reviews are a means of ensuring the quality
 of code is consistent across the team &ndash;
-and typically all code gets brought to a much higher standard as a result.
+and typically all code gets raised to a much higher standard as a result.
 Through code reviews, junior team members can see obtain feedback from
 their peers on their contributions before merge, as well as learn
 from the feedback on other colleagues' contributions. But code review
@@ -84,7 +84,7 @@ checks before it even gets to review, then the human element
 can be saved for the deep structural thought.
 [`ansible-review`](/2016/06/28/announcing-ansible-review.html) is
 an example of such a tool for Ansible; most languages and CM
-frameworks have alternatives.
+frameworks have similar tools.
 
 Comment on specific lines of code if you can to say where the
 code doesn't meet standards or could be improved. General feedback
@@ -144,9 +144,10 @@ From there, you'll likely find that code review tools provide
 a much easier way to provide feedback, because you can associate
 your comments with a line of code very easily.
 
-We actually use a code review process for improving our standards
-and best practices - all new standards must be accepted by at least
+In our global team of 20+ sysadmins, we actually use a code
+review process for improving our standards
+and best practices &ndash; all new standards must be accepted by at least
 two colleagues, and all best practice suggestions must get at least
-one +1. This ensures that no one feels that standards are dictated.
-This will be required more in a big distributed team than in a small
-co-located team where a 2 minute chat would suffice!
+one +1. This is intended to ensure that no one feels that standards
+are imposed upon them. In a small
+co-located team a 2 minute chat might suffice instead!

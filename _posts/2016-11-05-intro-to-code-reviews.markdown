@@ -12,11 +12,10 @@ it's not universally practised.
 Constructive code reviews are a means of ensuring the quality
 of code is consistent across the team &ndash;
 and typically all code gets raised to a much higher standard as a result.
-Through code reviews, junior team members can see obtain feedback from
+Through code reviews, team members can see obtain feedback from
 their peers on their contributions before merge, as well as learn
-from the feedback on other colleagues' contributions. But code review
-is not just for the benefit of junior team members &ndash; it promotes
-a shared understanding of the entire codebase amongst the team,
+from the feedback on other colleagues' contributions. Code review
+also promotes a shared understanding of the entire codebase amongst the team,
 making it easier for everyone to contribute. Additionally it
 provides visibility of changes to the codebase to everyone, which
 helps to avoid errors, and reduce wasteful or overly complicated

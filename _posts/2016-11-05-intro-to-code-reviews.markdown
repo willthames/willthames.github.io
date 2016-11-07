@@ -79,6 +79,9 @@ tedious to review, and from a reviewee's point of view, they just
 seem like tedious nitpicking. If the code has to meet such automated
 checks before it even gets to review, then the human element
 can be saved for the deep structural thought.
+[`ansible-review`](/2016/06/28/announcing-ansible-review.html) is
+an example of such a tool for Ansible, most languages and CM
+frameworks have alternatives.
 
 Comment on specific lines of code if you can to say where the
 code doesn't meet standards or could be improved. General feedback

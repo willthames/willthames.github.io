@@ -17,8 +17,10 @@ their peers on their contributions before merge, as well as learn
 from the feedback on other colleagues' contributions. But code review
 is not just for the benefit of junior team members &ndash; it promotes
 a shared understanding of the entire codebase amongst the team,
-making it easier for everyone to contribute, avoid errors, and reduce
-wasteful or overly complicated code being added to the codebase.
+making it easier for everyone to contribute. Additionally it
+provides visibility of changes to the codebase to everyone, which
+helps to avoid errors, and reduce wasteful or overly complicated
+code being added to the codebase.
 
 ## When should code reviews happen
 

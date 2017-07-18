@@ -9,3 +9,5 @@ email: will@thames.id.au
 github_username: willthames
 twitter_username: willthames
 timezone: Australia/Brisbane
+gems:
+  - jekyll-feed

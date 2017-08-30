@@ -101,7 +101,7 @@ exists in ~/.aws/credentials and then run:
 
 ```
 export ADMIN_PROFILE=$your_profile_name
-ansible-playbook hacking/aws/setup-iam.yml -e iam_group=ansible_test -e profile=$ADMIN_PROFILE -e region=us-east-2 -vv
+ansible-playbook hacking/aws_config/setup-iam.yml -e iam_group=ansible_test -e profile=$ADMIN_PROFILE -e region=us-east-2 -vv
 ```
 
 You don't actually have to set profile or region at all if you don't need
@@ -117,7 +117,7 @@ This can all be automated:
 ```
 aws iam create-user --user-name ansible_test --profile $ADMIN_PROFILE
 aws iam add-user-to-group --user-name ansible_test --group_name ansible_test --profile $ADMIN_PROFILE
-aws iam create-access-key --user-name ansible-test --profile $ADMIN_PROFILE
+aws iam create-access-key --user-name ansible_test --profile $ADMIN_PROFILE
 ```
 
 Note: This can be done through Ansible's [iam module](docs.ansible.com/ansible/iam_module.html)
@@ -302,3 +302,7 @@ things that *I* could learn to do better.
 
 If you have any suggestions for improvement, please raise an issue or PR
 on https://github.com/willthames/willthames.github.io or just let me know on Twitter or email (links below). Thanks!
+
+## Thanks
+
+Thanks to Moritz Grimm for pointing out a couple of typos. These are now fixed.

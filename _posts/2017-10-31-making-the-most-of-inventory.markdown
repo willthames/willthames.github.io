@@ -4,7 +4,7 @@ to think that as this runs locally, using `hosts: localhost` is
 the best option.
 
 In reality, using `localhost` as your host loses you a lot of power.
-To avoid this, I use what I call a 'runner' pattern, where a runner
+To avoid this, we can use a 'runner' pattern, where a runner
 is a local target on which you can hang inventory.
 
 In our environment we tend to be either managing whole environments

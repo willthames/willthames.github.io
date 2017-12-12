@@ -29,6 +29,8 @@ I also keep a README.md file in the library directory. It looks a bit like:
 |ec2_placement_group.py     | https://github.com/ansible/ansible/pull/33139 | Available in 2.5|
 ```
 
+Keeping track of why I'm using each module allows me to remove released modules after each major or minor Ansible release.
+
 One minor caveat: if the module you're using relies on recent updates to
 `module_utils` shared libraries, you might need to either copy those into the module or instead use
 the [`module_utils` config directive](http://docs.ansible.com/ansible/latest/intro_configuration.html#module-utils)

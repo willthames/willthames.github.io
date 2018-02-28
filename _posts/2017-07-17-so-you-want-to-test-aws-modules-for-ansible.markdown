@@ -1,6 +1,11 @@
 ---
 title: So You Want To Test AWS Modules For Ansible
 ---
+
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
+This page was updated on 2018-02-28 to better document IAM policy changes,
+the aliases file, YAML anchors for testing credentials</div>
+
 You're a (prospective) contributor to Ansible, and you have some
 great improvements to make to an existing module or a brand new
 module. As a conscientious developer, you know that having tests
@@ -10,7 +15,7 @@ The standard tests for AWS modules are integration tests as most
 of them rely on creating some resources in AWS, updating them, and
 then cleaning up afterwards.
 
-I'll start this post from absolute first principles - I'll use
+I'll start this post from absolute first principles&mdash;I'll use
 a shiny new Fedora 26 vagrant VM.
 
 
@@ -67,7 +72,7 @@ And `ansible --version` should now show the development version (currently
 ## Install docker
 
 Add docker and set it up so that you don't have to be root to run it. There
-are some security implications with this - being in the docker group is
+are some security implications with this&mdash;being in the docker group is
 [effectively equivalent to root access](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface).
 
 ```
@@ -82,7 +87,7 @@ newgrp docker
 ## Setting up AWS account
 
 Install the relevant command line tools (you can do this in a virtualenv
-if you prefer - it depends if you'd need to test with different versions
+if you prefer&mdash;it depends if you'd need to test with different versions
 of boto3 etc). The boto library is currently still required for quite a
 few modules, as well as the common code used to connect to AWS.
 
@@ -95,7 +100,7 @@ use this user for Ansible, or put its credentials anywhere near your
 git repo! I use boto profiles for all of the AWS accounts that I use,
 and don't have a default profile so that I always have to choose.
 
-Note: DO NOT use your AWS root user - if you don't have a suitable
+Note: DO NOT use your AWS root user&mdash;if you don't have a suitable
 user yet, create a new IAM user with
 the AdministratorAccess managed policy (or similar) attached
 
@@ -108,7 +113,7 @@ ansible-playbook hacking/aws_config/setup-iam.yml -e iam_group=ansible_test -e p
 ```
 
 You don't actually have to set profile or region at all if you don't need
-them - region defaults to `us-east-1`, but you can only choose `us-east-2`
+them&mdash;region defaults to `us-east-1`, but you can only choose `us-east-2`
 as an alternative at this time.
 
 You'll now need to go into AWS console, create an IAM user (called e.g. `ansible_test`)
@@ -161,6 +166,22 @@ The first of these should return your administrator user. The second of these
 should return your Ansible test user. If this isn't the case, check the previous
 steps (and let me know if I can improve the documentation!).
 
+## Ensuring your user has the correct IAM policies
+
+```
+ansible-playbook hacking/aws_config/setup-iam.yml -e region=us-east-2 \
+  -e profile=$ADMIN_PROFILE -e iam_group=ansible_test -vv
+```
+
+If you need additional IAM policies for your module, you'll need to add these
+to a new or an existing policy file in `hacking/aws_config/testing_policies`.
+Note that there is a maximum of 10 policies per group, so we're now using consolidated
+policies (e.g. compute, storage, network) etc. rather than a policy per service.
+
+Adding the necessary policies here is a good way of documenting the new policies
+that you need, which will also help Ansible's AWS account administrators add the
+policies needed by the CI account.
+
 ## Running an integration test suite
 
 Check that you can run the integration tests
@@ -178,29 +199,29 @@ speed things up (it's worth updating the containers fairly regularly, of course)
 For your module, you will need:
 
 * `test/integration/module_name/aliases`
-* `test/integration/module_name/meta/main.yml`
 * `test/integration/module_name/tasks/main.yml`
 
-### meta/main.yml
-
-```
-- dependencies:
-  - prepare_tests
-  - setup_ec2
-```
-
-These are needed to ensure that `resource_prefix` is available to your tests.
-All resources are expected to be prefixed with this to ensure that they can
-be cleaned up more easily.
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
+Previously, I said here that `meta/main.yml` was required, but it isn't&mdash;most of
+the AWS module test suites don't need to specify any dependencies at all.</div>
 
 ### aliases
 
 ```
 cloud/aws
-posix/ci/cloud/aws
+posix/ci/cloud/groupX/aws
 ```
 
-Without the aliases file, the cloud-config-aws.yml doesn't get picked up.
+Without the `cloud/aws` in the aliases file, the cloud-config-aws.yml doesn't get picked up.
+
+The second alias is used to parallelise the AWS integration tests across multiple test
+runners. There are currently five groups (group1 through group5)&mdash;just choose one - we
+can always rebalance if needed.
+
+If you want to reuse a test suite for multiple modules (e.g. the
+`aws_waf_web_acl` suite also tests `aws_waf_condition`, `aws_waf_rule` and
+`aws_waf_facts`), add those other dependent modules into aliases as well.
+
 
 ### tasks/main.yml
 
@@ -208,31 +229,47 @@ This should contain all of the tasks needed for the tests. Most actions are
 coupled with an `assert` task that the test has had the desired effect.
 
 The main tasks should be in a `block` with an accompanying `always` that
-cleans up to avoid things being left behind by the tests
+cleans up to avoid things being left behind by the tests. Clean up tasks
+should always ignore errors.
+
+Before running any tasks, set up the account credentials in a reusable YAML
+anchor for use in each AWS task.
 
 ```
 {% raw %}
 - block:
-  - name: create resource
+ &mdash;name: set up AWS credentials
+    set_fact:
+      aws_connection_info: &aws_connection_info
+        aws_region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        security_token: "{{ security_token }}"
+    no_log: yes
+
+ &mdash;name: create resource
     aws_module:
+      <<: *aws_connection_info
       state: present
       name: "{{ resource_prefix }}-more-name"
       ...
     register: aws_module_result
 
-  - name: check that resource was created
+ &mdash;name: check that resource was created
     assert:
       that:
-        - aws_module_result.changed
-        - aws_module_result.name == "{{ resource_prefix }}-more-name"
+       &mdash;aws_module_result.changed
+       &mdash;aws_module_result.name == "{{ resource_prefix }}-more-name"
     ...
 
 - always:
-  - name: remove resource
+ &mdash;name: remove resource
     aws_module:
+      <<: *aws_connection_info
       state: absent
       name: "{{ resource_prefix }}-more-name"
       ...
+    ignore_errors: yes
 {% endraw %}
 ```
 
@@ -257,10 +294,10 @@ At this point, it's likely easiest to create a quick test playbook
 ```
 - hosts: localhost
   vars_files:
-  - test/integration/cloud-config-aws.yml
+ &mdash;test/integration/cloud-config-aws.yml
 
   roles:
-  - test/integration/targets/aws_module
+ &mdash;test/integration/targets/aws_module
 ```
 
 And run this with `ANSIBLE_KEEP_REMOTE_FILES=1 ansible-playbook test-playbook.yml -vvv`.
@@ -279,7 +316,7 @@ So my steps are:
 
 ## Tidy up
 
-Detach the policies from your test IAM group - this will leave the test group and user in
+Detach the policies from your test IAM group&mdash;this will leave the test group and user in
 place but with zero privileges.
 
 ```
@@ -301,7 +338,7 @@ vagrant halt
 
 This post is designed to assist people with setting up the various steps needed to test
 and debug AWS modules for Ansible. There are almost certainly errors, omissions, and
-things that *I* could learn to do better. 
+things that *I* could learn to do better.
 
 If you have any suggestions for improvement, please raise an issue or PR
 on https://github.com/willthames/willthames.github.io or just let me know on Twitter or email (links below). Thanks!

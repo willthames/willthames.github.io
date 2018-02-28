@@ -1,3 +1,6 @@
+---
+title: So You Want To Test AWS Modules For Ansible
+---
 You're a (prospective) contributor to Ansible, and you have some
 great improvements to make to an existing module or a brand new
 module. As a conscientious developer, you know that having tests

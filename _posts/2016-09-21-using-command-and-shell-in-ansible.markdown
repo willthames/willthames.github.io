@@ -139,5 +139,5 @@ then not do the changing task if it is.
 
 - name: set tuned profile
   command: tuned-adm profile virtual-guest
-  when: "'Current active profile: virtual-guest' not in tuned-adm.stdout"
+  when: "'Current active profile: virtual-guest' not in tuned_adm.stdout"
 ```

@@ -238,7 +238,7 @@ anchor for use in each AWS task.
 ```
 {% raw %}
 - block:
- &mdash;name: set up AWS credentials
+  - name: set up AWS credentials
     set_fact:
       aws_connection_info: &aws_connection_info
         aws_region: "{{ aws_region }}"
@@ -247,7 +247,7 @@ anchor for use in each AWS task.
         security_token: "{{ security_token }}"
     no_log: yes
 
- &mdash;name: create resource
+  - name: create resource
     aws_module:
       <<: *aws_connection_info
       state: present
@@ -255,7 +255,7 @@ anchor for use in each AWS task.
       ...
     register: aws_module_result
 
- &mdash;name: check that resource was created
+  - name: check that resource was created
     assert:
       that:
        &mdash;aws_module_result.changed
@@ -263,7 +263,7 @@ anchor for use in each AWS task.
     ...
 
 - always:
- &mdash;name: remove resource
+  - name: remove resource
     aws_module:
       <<: *aws_connection_info
       state: absent
@@ -294,10 +294,10 @@ At this point, it's likely easiest to create a quick test playbook
 ```
 - hosts: localhost
   vars_files:
- &mdash;test/integration/cloud-config-aws.yml
+  - test/integration/cloud-config-aws.yml
 
   roles:
- &mdash;test/integration/targets/aws_module
+  - test/integration/targets/aws_module
 ```
 
 And run this with `ANSIBLE_KEEP_REMOTE_FILES=1 ansible-playbook test-playbook.yml -vvv`.

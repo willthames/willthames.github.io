@@ -99,12 +99,12 @@ configmap/secret. This means that when replicasets are retired (Kubernetes keeps
 replicasets by default, but this is configurable with `spec.revisionHistoryLimit`) the
 associated configmaps and secrets are also retired.
 
-For diffs, first we lookup the `deployments.kubernetes.io/version` annotation of the
+For diffs, first we lookup the `deployments.kubernetes.io/revision` annotation of the
 previous deployment and the current deployment. We then have to find all replicasets
 (as there's no way to search by annotation, unfortunately) and then select the
 previous replicaset and current replicaset using the same annotation.
 
-Adding a new label, such as `configmap_name_prefix`, to our configmaps allows us to
+Adding a new label, such as `kube_resource_prefix`, to our configmaps allows us to
 iterate over our `kube_resource_configmaps` dict (the `label_selectors` argument to
 `k8s_facts` is useful here), each time looking for all configmaps
 with the label of the current configmap, and then finding the configmap with the

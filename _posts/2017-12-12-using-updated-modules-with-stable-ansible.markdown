@@ -4,6 +4,11 @@ date: 2017-12-12 10:00:00
 layout: post
 ---
 <div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
+This page was updated 2020-05-16 to incorporate how to use collections to the
+same effect
+</div>
+
+<div class="alert alert-info"><span class="glyphicon glyphicon-info-sign"></span>
 This page was updated on 2019-04-07 to improve `module_utils` information and
 add plugin information</div>
 
@@ -22,14 +27,8 @@ stable Ansible core release:
 When that happens, thankfully you don't have to run off your own megamerge
 branch of ansible<sup>&dagger;</sup>. 
 
-My approach for this is to use the [default `library`
-directory](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#default-module-path)
-feature &mdash;
-create a `library` directory in the top level of your playbooks repository,
-and put any modules that you need but aren't yet in the version of ansible
-you're using there.
-
-I also keep a README.md file in the library directory. It looks a bit like:
+Which ever of the two approaches below you take, I recommend keeping
+a README.md file in the library directory. For modules, it looks a bit like:
 
 ```
 |Module                     | PR                                            | Notes           |
@@ -37,8 +36,47 @@ I also keep a README.md file in the library directory. It looks a bit like:
 |cloudfront_distribution.py | https://github.com/ansible/ansible/pull/31284 | Unmerged        |
 |ec2_placement_group.py     | https://github.com/ansible/ansible/pull/33139 | Available in 2.5|
 ```
+but the same log is useful for plugins and collections.
 
-Keeping track of why I'm using each module allows me to remove released modules after each major or minor Ansible release.
+Keeping track of why I'm using non-core code allows me to remove it when the desired functionality
+becomes available in newer Ansible or collections releases.
+
+## The collections approach
+
+[Using ansible collections](https://docs.ansible.com/ansible/latest/user_guide/collections_using.html)
+to incorporate updates from baseline can be a sensible approach when you need
+several changes at once or just want to track latest or a branch.
+
+You can use ansible-galaxy to install collections. I always recommend pinning to
+a specific version to avoid surprises. If you don't want to use ansible-galaxy,
+you can always just commit the results of installing
+the collection (or just update a submodule) in the `collections` subdirectory
+below your playbooks (other locations are available through configuring
+[`collections_paths`](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#collections-paths) -
+take note of both the plurals, I wasted hours investigating why `ANSIBLE_COLLECTION_PATHS` wasn't working).
+
+```
+mkdir collections
+git clone git@github.com:ansible-collections/community.kubernetes collections/community.kubernetes
+```
+
+This will get you the latest merged commits from the official community.kubernetes
+(as opposed to `ansible-galaxy collection install -p collections community.kubernetes` which
+gets you the latest released version) - but you can also clone a fork and choose a
+branch to get as yet unmerged commits (e.g. if you're keen to include an unmerged pull
+request)
+
+## The selective approach
+
+Use this when you don't necessarily want to update every module or plugin in a collection
+which might introduce unexpected behaviours in modules you're not looking to update
+
+My approach for this is to use the [default `library`
+directory](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#default-module-path)
+feature &mdash;
+create a `library` directory in the top level of your playbooks repository,
+and put any modules that you need but aren't yet in the version of ansible
+you're using there.
 
 If you're using modules that rely on updates to `module_utils` shared libraries, you can  set
 the [`module_utils` config directive](https://docs.ansible.com/ansible/latest/reference_appendices/config.html#default-module-utils-path)
